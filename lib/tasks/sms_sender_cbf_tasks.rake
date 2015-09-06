@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :sms_sender_ots do
+# task :sms_sender_cbf do
 #   # Task goes here
 # end

@@ -1,7 +1,7 @@
-sms_sender_ots
+sms_sender_cbf
 ==================
 
-rails gem to send sms via http://api.otsdc.com/
+rails gem to send sms via http://sms2.cardboardfish.com:9001/HTTPSMS
 
 http api based on: 
-http://docs.digitalplatform.apiary.io/
+http://help.cardboardfish.com/sites/default/files/HTTPSMSProtocolSpecification_V3.3_0.pdf

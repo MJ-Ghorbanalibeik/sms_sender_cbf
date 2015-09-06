@@ -1,10 +1,11 @@
 module MessageParser
-  def self.extract_number(input_string, key)
-    index_of_key = input_string.index(key)
-    return nil unless index_of_key
-    start_of_number = input_string.index(':', index_of_key) + 1
-    end_of_number = input_string.index("<br", index_of_key)
-    end_of_number ||= input_string.length
-    error_number = input_string[start_of_number..(end_of_number-1)].to_i
+  def self.successful_response?(response)
+    return response.starts_with?('OK')
+  end
+
+  def self.messageid_or_error_code(response)
+    status_length = response.index(' ')
+    raise 'Unable to parse response: ' + response unless status_length
+    response[(status_length + 1)..(response.from(status_length + 1).index(/ |\r|\n|\Z/) + status_length)]
   end
 end

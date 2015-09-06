@@ -1,6 +1,6 @@
-= SmsSenderResalty
+= SmsSenderCBF
 
 This project rocks and uses MIT-LICENSE.
 
 http api based on: 
-http://docs.digitalplatform.apiary.io/
+http://help.cardboardfish.com/sites/default/files/HTTPSMSProtocolSpecification_V3.3_0.pdf
