@@ -10,4 +10,10 @@ class SmsSenderCbfTest < ActiveSupport::TestCase
     assert_not_equal send_sms_result[:message_id], nil
     assert_equal send_sms_result[:error], nil
   end
+
+  test 'send test unicode' do
+    send_sms_result = SmsSenderCbf.send_sms(ENV['username'], ENV['password'], ENV['mobile_number'], ENV['sender'], 'این متن از آزمون خودکار فرستاده شده')
+    assert_not_equal send_sms_result[:message_id], nil
+    assert_equal send_sms_result[:error], nil
+  end
 end

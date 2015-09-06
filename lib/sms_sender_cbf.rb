@@ -16,9 +16,18 @@ module SmsSenderCbf
     message_normalized = Normalizer.normalize_message(message)
     http = Net::HTTP.new('sms1.cardboardfish.com', 9001)
     path = '/HTTPSMS'
-    body = "S=H&UN=#{username}&P=#{password}&DA=#{mobile_number_normalized}&SA=#{sender_normalized}&M=".encode(Encoding::UCS_2BE) + message_normalized
+    params = {
+      'S' => 'H',
+      'UN' => username,
+      'P' => password,
+      'DA' => mobile_number_normalized,
+      'SA' => sender_normalized,
+      'M' => message_normalized
+    }
+    params.merge!({ 'DC' => 4 }) unless message.ascii_only?
+    body=URI.encode_www_form(params)
     headers = { 'Content-Type' => 'application/x-www-form-urlencoded' }
-    response = http.get(path, body, headers)
+    response = http.post(path, body, headers)
     if response.code.to_i == 200 && MessageParser.successful_response?(response.body)
       return { message_id: MessageParser.messageid_or_error_code(response.body), code: 0 }
     else

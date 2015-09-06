@@ -15,6 +15,7 @@ module Normalizer
   end
 
   def self.normalize_message(message)
-    message.encode(Encoding::UCS_2BE)
+    return message if message.ascii_only?
+    message.encode(Encoding::UCS_2BE).each_byte.map{ |b| (b.to_s(16).length < 2 ? '0' : '') + b.to_s(16) }.join
   end
 end
