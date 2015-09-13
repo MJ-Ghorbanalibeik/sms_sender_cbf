@@ -10,16 +10,16 @@ module SmsSenderCbf
   include ErrorCodes
 
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
-  def self.send_sms(username, password, mobile_number, sender, message)
+  def self.send_sms(credentials, mobile_number, message, sender)
     mobile_number_normalized = Normalizer.normalize_number(mobile_number)
-    sender_normalized = Normalizer.normalize_sender(sender)
     message_normalized = Normalizer.normalize_message(message)
+    sender_normalized = Normalizer.normalize_sender(sender)
     http = Net::HTTP.new('sms1.cardboardfish.com', 9001)
     path = '/HTTPSMS'
     params = {
       'S' => 'H',
-      'UN' => username,
-      'P' => password,
+      'UN' => credentials[:username],
+      'P' => credentials[:password],
       'DA' => mobile_number_normalized,
       'SA' => sender_normalized,
       'M' => message_normalized
