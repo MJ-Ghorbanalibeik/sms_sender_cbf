@@ -10,7 +10,7 @@ module SmsSenderCbf
   include ErrorCodes
 
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
-  def self.send_sms(credentials, mobile_number, message, sender)
+  def self.send_sms(credentials, mobile_number, message, sender, options = nil)
     mobile_number_normalized = Normalizer.normalize_number(mobile_number)
     message_normalized = Normalizer.normalize_message(message)
     sender_normalized = Normalizer.normalize_sender(sender)
