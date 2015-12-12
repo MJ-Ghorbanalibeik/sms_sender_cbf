@@ -1,4 +1,4 @@
-module SmsSenderCbf
+module ::SmsSenderCbf
   module ErrorCodes
     def self.get_error_message(error_code)
       # Based on http://help.cardboardfish.com/sites/default/files/HTTPSMSProtocolSpecification_V3.3_0.pdf

@@ -2,7 +2,7 @@ require 'message_parser'
 require 'normalizer'
 require 'error_codes'
 
-module SmsSenderCbf
+module ::SmsSenderCbf
   require "net/http"
 
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
