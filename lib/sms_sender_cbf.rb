@@ -5,15 +5,15 @@ require 'error_codes'
 module SmsSenderCbf
   require "net/http"
 
-  include MessageParser
-  include Normalizer
-  include ErrorCodes
+  include SmsSenderCbf::MessageParser
+  include SmsSenderCbf::Normalizer
+  include SmsSenderCbf::ErrorCodes
 
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
   def self.send_sms(credentials, mobile_number, message, sender, options = nil)
-    mobile_number_normalized = Normalizer.normalize_number(mobile_number)
-    message_normalized = Normalizer.normalize_message(message)
-    sender_normalized = Normalizer.normalize_sender(sender)
+    mobile_number_normalized = SmsSenderCbf::Normalizer.normalize_number(mobile_number)
+    message_normalized = SmsSenderCbf::Normalizer.normalize_message(message)
+    sender_normalized = SmsSenderCbf::Normalizer.normalize_sender(sender)
     http = Net::HTTP.new('sms1.cardboardfish.com', 9001)
     path = '/HTTPSMS'
     params = {
@@ -28,11 +28,11 @@ module SmsSenderCbf
     body=URI.encode_www_form(params)
     headers = { 'Content-Type' => 'application/x-www-form-urlencoded' }
     response = http.post(path, body, headers)
-    if response.code.to_i == 200 && MessageParser.successful_response?(response.body)
-      return { message_id: MessageParser.messageid_or_error_code(response.body), code: 0 }
+    if response.code.to_i == 200 && SmsSenderCbf::MessageParser.successful_response?(response.body)
+      return { message_id: SmsSenderCbf::MessageParser.messageid_or_error_code(response.body), code: 0 }
     else
-      result = ErrorCodes.get_error_message(MessageParser.messageid_or_error_code(response.body)).merge(
-        code: MessageParser.messageid_or_error_code(response.body).to_i
+      result = SmsSenderCbf::ErrorCodes.get_error_message(SmsSenderCbf::MessageParser.messageid_or_error_code(response.body)).merge(
+        code: SmsSenderCbf::MessageParser.messageid_or_error_code(response.body).to_i
       )
       raise result[:error]
       return result
