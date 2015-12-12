@@ -1,4 +1,4 @@
-module ::SmsSenderCbf
+module SmsSenderCbf
   module MessageParser
     def self.successful_response?(response)
       return response.starts_with?('OK')
