@@ -22,12 +22,13 @@ module SmsSenderCbf
       # that service provider compares amount of ucs-2 with ucs-4 characters,
       # to determine which encoding should it use.
       byte_map = ''
-      emoji_spoted = false
+      emoji_covered = false
+      number_of_non_ascii = message.each_char.map{|c| c.ascii_only? ? 1 : 0 }.sum
       message.encode(Encoding::UCS_2BE).each_char do |char|
         if char.bytes[0].to_s(16) == 'd8' && char.bytes[1].to_s(16) == '3d'
-          byte_map += 'feff' * message.length if !emoji_spoted
+          byte_map += 'feff' * (message.length - number_of_non_ascii) if !emoji_covered
           byte_map += char.each_byte.map{ |b| (b.to_s(16).length < 2 ? '0' : '') + b.to_s(16) }.join
-          byte_map += 'feff' if !emoji_spoted
+          byte_map += 'feff' if !emoji_covered
           emoji_spoted = true
         else
           byte_map += char.each_byte.map{ |b| (b.to_s(16).length < 2 ? '0' : '') + b.to_s(16) }.join

@@ -4,7 +4,9 @@ require 'test_helper'
 class SmsSenderCbfTest < ActiveSupport::TestCase
   test_messages = [
     'This message has been sent from automated test 😎',
-    'این پیام از آزمون خودکار فرستاده شده است 😎'
+    'این پیام از آزمون خودکار فرستاده شده است 😎',
+    'Automated test, more ascii 😎 آزمون خودکار',
+    'Automated test 😎 بیشتر غیر اسکی ،آزمون خودکار'
   ]
   if !ENV['REAL'].blank? && ENV['REAL']
     WebMock.allow_net_connect!
