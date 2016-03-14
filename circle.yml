@@ -1,0 +1,22 @@
+## Customize the test machine
+machine:
+  timezone: UTC # Set the timezone
+  ruby:
+      version: 2.1.1
+
+## Customize dependencies
+dependencies:
+  pre:
+    - gem install webmock
+    - gem install dotenv
+  override:
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+## Customize test commands
+test:
+  override:
+    - echo "mobile_number="$SMS_SENDER_CBF_MOBILE_NUMBER > .env
+    - echo "username="$SMS_SENDER_CBF_USERNAME >> .env
+    - echo "password="$SMS_SENDER_CBF_PASSWORD >> .env
+    - echo "sender="$SMS_SENDER_CBF_SENDER >> .env
+    - dotenv rake test
