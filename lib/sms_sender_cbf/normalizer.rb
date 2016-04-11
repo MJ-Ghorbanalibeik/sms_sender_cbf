@@ -18,7 +18,9 @@ module SmsSenderCbf
 
     def self.normalize_message(message)
       return message if message.ascii_only?
-      message.encode(Encoding::UCS_2BE).each_byte.map{ |b| (b.to_s(16).length < 2 ? '0' : '') + b.to_s(16) }.join
+      message_utf16 = message.encode('UTF-16BE')
+      message_encoded = message_utf16.unpack("H2"*message_utf16.bytes.count).join
+      return message_encoded
     end
   end
 end
