@@ -15,3 +15,6 @@ Version log:
 
   1.3.0: 
     Revert encoding hack for emojis.
+
+  1.5.0: 
+    Implement query_deliveries method.
