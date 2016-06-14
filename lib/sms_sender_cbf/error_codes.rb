@@ -17,5 +17,24 @@ module SmsSenderCbf
           { error: 'Unknown error code' }
       end
     end
+
+    def self.query_deliveries_status(str)
+      case str.to_i
+        when 1
+          return 'delivered'
+        when 2
+          return 'buffered'
+        when 3
+          return 'failed'
+        when 5
+          return 'expired'
+        when 6
+          return 'rejected'
+        when 7
+          return 'error'
+        else
+          return 'unknown'
+      end
+    end
   end
 end

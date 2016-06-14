@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    sms_sender_cbf (1.4.0)
+    sms_sender_cbf (1.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -123,4 +123,4 @@ DEPENDENCIES
   webmock!
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

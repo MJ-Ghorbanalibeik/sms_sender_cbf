@@ -4,6 +4,7 @@ require 'sms_sender_cbf/normalizer'
 require 'sms_sender_cbf/error_codes'
 
 module SmsSenderCbf
+  supported_methods = [:send_sms, :query_deliveries]
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
   def self.send_sms(credentials, mobile_number, message, sender, options = nil)
     mobile_number_normalized = SmsSenderCbf::Normalizer.normalize_number(mobile_number)
@@ -17,7 +18,8 @@ module SmsSenderCbf
       'P' => credentials['password'],
       'DA' => mobile_number_normalized,
       'SA' => sender_normalized,
-      'M' => message_normalized
+      'M' => message_normalized,
+      'DR' => '2'
     }
     params.merge!({ 'DC' => '4' }) unless message.ascii_only?
     body=URI.encode_www_form(params)
@@ -31,6 +33,23 @@ module SmsSenderCbf
       )
       raise result[:error]
       return result
+    end
+  end
+
+  def self.query_deliveries(credentials)
+    http = Net::HTTP.new('sms1.cardboardfish.com', 9001)
+    path = '/ClientDR/ClientDR'
+    params = {
+      'UN' => credentials['username'],
+      'P' => credentials['password']
+    }
+    body=URI.encode_www_form(params)
+    headers = { 'Content-Type' => 'application/x-www-form-urlencoded' }
+    response = http.post(path, body, headers)
+    if response.code.to_i == 200 && SmsSenderCbf::MessageParser.query_deliveries_succesful_response?(response.body)
+      return SmsSenderCbf::MessageParser.query_deliveries_parser(response.body)
+    else
+      # TODO return & raise error
     end
   end
 end
