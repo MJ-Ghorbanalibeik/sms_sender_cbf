@@ -31,7 +31,7 @@ class SmsSenderCbfTest < ActiveSupport::TestCase
     end
   end
 
-  test 'query deliveries' do
+  test 'query deliveries test' do
     if !ENV['REAL'].blank? && ENV['REAL']
       WebMock.allow_net_connect!
     else
@@ -46,5 +46,11 @@ class SmsSenderCbfTest < ActiveSupport::TestCase
     query_deliveries_result = SmsSenderCbf.query_deliveries({'username' => ENV['username'], 'password' => ENV['password']})
     assert_equal query_deliveries_result.first['message_id'], '123456'
     assert_equal query_deliveries_result.first['status'], 'delivered'
+  end
+
+  test 'module should respod to supported_methods with proper values' do
+    assert SmsSenderCbf.respond_to?(:supported_methods)
+    assert SmsSenderCbf.supported_methods.include?('send_sms')
+    assert SmsSenderCbf.supported_methods.include?('query_deliveries')
   end
 end

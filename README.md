@@ -18,3 +18,6 @@ Version log:
 
   1.5.0: 
     Implement query_deliveries method.
+
+  1.5.1:
+    Fix response of module to supported_methods

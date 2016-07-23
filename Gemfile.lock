@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    sms_sender_cbf (1.5.0)
+    sms_sender_cbf (1.5.1)
 
 GEM
   remote: https://rubygems.org/
