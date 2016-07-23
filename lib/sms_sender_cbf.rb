@@ -4,7 +4,9 @@ require 'sms_sender_cbf/normalizer'
 require 'sms_sender_cbf/error_codes'
 
 module SmsSenderCbf
-  supported_methods = [:send_sms, :query_deliveries]
+  def self.supported_methods 
+    ['send_sms', 'query_deliveries']
+  end
   # According to documentation: http://help.cardboardfish.com/?q=HTTPSMSSpecificationDocument
   def self.send_sms(credentials, mobile_number, message, sender, options = nil)
     mobile_number_normalized = SmsSenderCbf::Normalizer.normalize_number(mobile_number)
