@@ -21,3 +21,6 @@ Version log:
 
   1.5.1:
     Fix response of module to supported_methods
+
+  1.5.2:
+    Update gitignore
