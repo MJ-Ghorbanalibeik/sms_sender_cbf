@@ -14,7 +14,7 @@ class SmsSenderCbfTest < ActiveSupport::TestCase
     else
       # Config webmock for sending messages 
       test_messages.each do |m|
-        request_body_header = {:body => {'S' => 'H', 'UN' => ENV['username'], 'P' => ENV['password'], 'DA' => SmsSenderCbf::Normalizer.normalize_number(ENV['mobile_number']), 'M' => SmsSenderCbf::Normalizer.normalize_message(m), 'DR' => '2'}, :headers => {'Content-Type'=>'application/x-www-form-urlencoded'}}
+        request_body_header = {:body => {'S' => 'H', 'UN' => ENV['username'], 'P' => ENV['password'], 'DA' => SmsSenderCbf::Normalizer.normalize_number(ENV['mobile_number']), 'M' => SmsSenderCbf::Normalizer.normalize_message(m), 'DR' => '1'}, :headers => {'Content-Type'=>'application/x-www-form-urlencoded'}}
         request_body_header[:body]['SA'] = ENV['sender'] if !ENV['sender'].blank?
         request_body_header[:body]['DC'] = '4' if !m.ascii_only?
         WebMock::API.stub_request(:post, 'sms1.cardboardfish.com:9001/HTTPSMS').
