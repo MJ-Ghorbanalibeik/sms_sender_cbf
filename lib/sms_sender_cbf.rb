@@ -21,7 +21,10 @@ module SmsSenderCbf
       'DA' => mobile_number_normalized,
       'SA' => sender_normalized,
       'M' => message_normalized,
-      'DR' => '2'
+      # However according to documentation this parameter should be set to 2, 
+      # based on personal test i've come to conclusion that setting it to 1 
+      # works correctly. 
+      'DR' => '1'
     }
     params.merge!({ 'DC' => '4' }) unless message.ascii_only?
     body=URI.encode_www_form(params)

@@ -24,3 +24,6 @@ Version log:
 
   1.5.2:
     Update gitignore
+
+  1.5.3:
+    Set delivery request param to 1 instead of 2
